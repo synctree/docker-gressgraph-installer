@@ -1,9 +1,9 @@
 from debian:jessie
 maintainer Mike Dillon <mike.dillon@synctree.com>
 
-run apt-get update && \
-    DEBIAN_FRONTEND=noninteractive \
-    apt-get install --no-install-recommends -y \
+run apt-get update -q
+run DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends -qy \
       git \
       ca-certificates \
       build-essential \
@@ -11,7 +11,8 @@ run apt-get update && \
       cabal-install \
       ;
 
-run cabal update && cabal install --verbose=0 parsec
+run cabal update
+run cabal install --verbose=0 parsec
 
 run git clone https://github.com/jekor/gressgraph.git /src
 workdir /src
