@@ -1,4 +1,4 @@
-from ubuntu:trusty
+from debian:jessie
 maintainer Mike Dillon <mike.dillon@synctree.com>
 
 run apt-get update && \
@@ -11,10 +11,12 @@ run apt-get update && \
       cabal-install \
       ;
 
-run cabal update && cabal install parsec
+run cabal update && cabal install --verbose=0 parsec
 
-run cd /tmp && git clone https://github.com/jekor/gressgraph.git
-run mkdir /target
+run git clone https://github.com/jekor/gressgraph.git /src
+workdir /src
 
-volume /target
-cmd ["cp", "/tmp/gressgraph", "/target"]
+run make
+add installer /installer
+
+cmd /installer
